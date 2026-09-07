@@ -1,0 +1,1 @@
+import { Router } from "express"; import { requireAuth } from "../middleware/auth"; import { checkin, getTicket, purchase } from "../controllers/ticketController"; const router = Router(); router.post("/purchase", purchase); router.get("/:qrToken", getTicket); router.patch("/:qrToken/checkin", requireAuth, checkin); export default router;
