@@ -1,0 +1,5 @@
+import { Schema, model, Document, Types } from "mongoose";
+export type VenueType = "physical" | "online"; export type EventStatus = "draft" | "published" | "cancelled" | "completed";
+export interface EventDocument extends Document { organizerId: Types.ObjectId; title: string; description?: string; coverImageUrl?: string; startDateTime: Date; endDateTime: Date; venueType: VenueType; venueAddress?: string; onlineLink?: string; status: EventStatus; slug: string; }
+const schema = new Schema<EventDocument>({ organizerId: { type: Schema.Types.ObjectId, ref: "Organizer", required: true, index: true }, title: { type: String, required: true }, description: String, coverImageUrl: String, startDateTime: { type: Date, required: true }, endDateTime: { type: Date, required: true }, venueType: { type: String, enum: ["physical", "online"], required: true }, venueAddress: String, onlineLink: String, status: { type: String, enum: ["draft", "published", "cancelled", "completed"], default: "draft" }, slug: { type: String, required: true, unique: true, index: true } }, { timestamps: true });
+export const Event = model<EventDocument>("Event", schema);

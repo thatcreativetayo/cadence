@@ -1,0 +1,5 @@
+import { Schema, model, Document, Types } from "mongoose";
+export type TicketStatus = "valid" | "checked_in" | "refunded";
+export interface TicketDocument extends Document { eventId: Types.ObjectId; tierId: Types.ObjectId; attendeeName: string; attendeeEmail: string; qrCode: string; status: TicketStatus; paystackRef: string; purchasedAt: Date; checkedInAt?: Date; }
+const schema = new Schema<TicketDocument>({ eventId: { type: Schema.Types.ObjectId, ref: "Event", required: true, index: true }, tierId: { type: Schema.Types.ObjectId, ref: "TicketTier", required: true }, attendeeName: { type: String, required: true }, attendeeEmail: { type: String, required: true, lowercase: true }, qrCode: { type: String, required: true, unique: true, index: true }, status: { type: String, enum: ["valid", "checked_in", "refunded"], default: "valid" }, paystackRef: { type: String, required: true, unique: true }, purchasedAt: { type: Date, default: Date.now }, checkedInAt: Date }, { timestamps: true });
+export const Ticket = model<TicketDocument>("Ticket", schema);
