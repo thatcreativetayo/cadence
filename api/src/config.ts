@@ -9,5 +9,9 @@ export const config = {
   paystackSecret: process.env.PAYSTACK_SECRET_KEY || "",
   paystackWebhookSecret: process.env.PAYSTACK_WEBHOOK_SECRET || process.env.PAYSTACK_SECRET_KEY || "",
   resendApiKey: process.env.RESEND_API_KEY || "",
+  googleClientId: process.env.GOOGLE_CLIENT_ID || "",
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+  googleRedirectUri: process.env.GOOGLE_REDIRECT_URI || "",
+  dashboardUrl: process.env.FRONTEND_DASHBOARD_URL || "http://localhost:3000/dashboard",
   port: Number(process.env.PORT || 4000)
 };
