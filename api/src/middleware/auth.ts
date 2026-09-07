@@ -1,0 +1,3 @@
+import { Request, Response, NextFunction } from "express"; import jwt from "jsonwebtoken"; import { config } from "../config"; import { AuthPayload } from "../utils/jwt";
+declare global { namespace Express { interface Request { auth?: AuthPayload; rawBody?: Buffer } } }
+export function requireAuth(req: Request, res: Response, next: NextFunction) { const header = req.headers.authorization; if (!header?.startsWith("Bearer ")) return res.status(401).json({ error: "Authentication required" }); try { req.auth = jwt.verify(header.slice(7), config.jwtSecret) as AuthPayload; next(); } catch { return res.status(401).json({ error: "Invalid or expired token" }); } }
